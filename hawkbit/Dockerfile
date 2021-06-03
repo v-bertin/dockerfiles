@@ -1,12 +1,13 @@
 FROM openjdk:8u191-jre-alpine
 
-MAINTAINER Cedric Vincent <cvincent@witekio.com>
+LABEL Cedric Vincent <cvincent@witekio.com> \
+      Victor Bertin <vbertin@witekio.com>
 
 ENV HAWKBIT_VERSION=0.2.5 \
     HAWKBIT_HOME=/opt/hawkbit \
     JAR_FILE=hawkbit-update-server.jar
 
-EXPOSE 8080
+EXPOSE 8443
 
 ######### General install
 RUN set -x \
@@ -19,6 +20,9 @@ RUN mkdir -p $HAWKBIT_HOME \
 
 ######### Hawkbit
 RUN git clone https://github.com/eclipse/hawkbit.git -b $HAWKBIT_VERSION
+
+######### Add cryptographic file (wrapped in a Java KeyStore object) holding certificate and private key of the Hawkbit Server
+COPY keyStoreHawkbitFMU.jks $HAWKBIT_HOME/keyStoreHawkbitFMU.jks
 
 ######### Add mysql dependency
 COPY add_mysql.py /hawkbit/hawkbit-repository/hawkbit-repository-jpa/add_mysql.py
