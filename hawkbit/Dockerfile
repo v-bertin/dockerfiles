@@ -22,7 +22,7 @@ RUN mkdir -p $HAWKBIT_HOME \
 RUN git clone https://github.com/eclipse/hawkbit.git -b $HAWKBIT_VERSION
 
 ######### Add cryptographic file (wrapped in a Java KeyStore object) holding certificate and private key of the Hawkbit Server
-COPY keyStoreHawkbitFMU.jks $HAWKBIT_HOME/keyStoreHawkbitFMU.jks
+COPY key-file $HAWKBIT_HOME/key-file
 
 ######### Add mysql dependency
 COPY add_mysql.py /hawkbit/hawkbit-repository/hawkbit-repository-jpa/add_mysql.py
